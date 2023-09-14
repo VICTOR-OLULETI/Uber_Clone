@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Registration Form </title>
+    <style type="text/css">
+        button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%   
+        }
+
+        button:hover {
+        opacity: 0.8;
+        }
+
+        input[type=text], input[type=password], input[type=email] {
+        width: 100%;
+        margin: 8px 0;
+        padding: 12px 20px;
+        display: inline-block;
+        border: 2px solid green;
+        box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1> User Registration</h1>
+    <h3>{{message}}</h3>
+  
+    <form method="POST" action="/signup">
+        <table>
+            <tr>
+                <td>
+                    <label for="">First Name: </label>
+                </td>
+                <td>
+                    <input type="text" id="firstname" name="firstname" placeholder="Enter a Username"
+                    required/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Last Name: </label>
+                </td>
+                <td>
+                    <input type="text" id="lastname" name="lastname" placeholder="Enter a Username"
+                    required/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for=""> Email: </label>
+                </td>
+                <td>
+                    <input type="email" id="email" name="email" placeholder="Enter an Email"
+                    required/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Password: </label>
+                </td>
+                <td>
+                    <input type="password" id="password" name="password" placeholder="Enter a Password"
+                    required/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit"> Sign Up </button>
+                </td>
+            </tr>            
+        </table>
+    </form>
+    Already have an account? <a href="/login"> Login </a>
+    <br/>
+    <a href="/home"> Home </a>
+</body>
+</html>

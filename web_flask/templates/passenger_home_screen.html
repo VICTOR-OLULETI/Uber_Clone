@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+<style>
+  #map {
+    height: 400px;
+    width: 100%;
+  }
+  h2 {
+    text-align: center;
+  }
+  form {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<form method="POST" action="/book_ride">
+  <div id="destinationForm">
+    <h2>Destination</h2>
+      <label for="destination">Choose a destination:</label>
+      <input type="text" id="selected_destination" name="selected_destination" placeholder="Search for a destination" required/>
+  </div>
+  <div id="rideForm">
+      <h2>Select Ride</h2>
+      <label for="ride">Ride options: </label>
+      <select id="selected_ride" name="selected_ride">
+        <option value="Classic">Classic</option>
+      </select>
+    </div>
+  <div id="fareForm">
+    <h2>Fare</h2>
+    <label for="fare">Estimated Fare: </label>
+    <input type="text" id="estimated_fare" name="estimated_fare" placeholder="calculated amount ..." required/>
+  </div>
+    <button type="submit">Continue</button>
+</form>
+<script>
+  
+</script>
+</body>
+</html>

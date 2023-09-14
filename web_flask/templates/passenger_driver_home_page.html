@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uber Clone</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+</head>
+<body>
+    <h1>Uber Clone</h1>
+    <div id="passenger" style="display:none;">
+        <button id="request">Request a ride</button>
+    </div>
+
+    <div id="driver" style="display: none;">
+        <button id="accept">Accept ride</button>
+    </div>
+   <script>
+    const socket = io();
+    const userType = prompt("Enter 'passenger' or 'driver':");
+
+    if (userType === 'passenger') {
+        document.getElementById('passenger').style.display = 'block';
+
+        document.getElementById('request').addEventListener('click', () => {
+            socket.emit('join', {room: userType});
+
+            socket.emit('passenger_request', { room: userType });
+        });
+
+        socket.on('passenger_response', (data) => {
+            alert(`Driver response: ${data.response}`);
+        });
+    } else if (userType === 'driver') {
+        document.getElementById('driver').style.display = 'block';
+
+        socket.emit('join', { room: userType });
+
+        socket.on('driver_request', (data) => {
+            //const answer = prompt("Do you accept ride? 'yes' or 'no':");
+            if (confirm('Do you Accept ride?')) {
+                socket.emit('driver_response', { room: userType, response: 'accepted' });
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

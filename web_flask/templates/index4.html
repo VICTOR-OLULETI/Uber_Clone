@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style></style>
+</head>
+<body>
+<div id="map"></div>
+<div id="details"></div>
+    <script>
+        /*
+        const watchId = navigator.geolocation.watchPosition(position => {
+            const { latitude, longitude } = position.coords;
+            console.log(latitude);
+            console.log(longitude);
+            console.log(watchId);
+            // Show a map centered at latitude / longitude.
+});   */
+        
+        var reqcount = 0;
+        const watchId = navigator.geolocation.watchPosition(successCallback, errorCallback, options);
+
+        function successCallback(position) {
+            const { accuracy, latitude, longitude, altitude, heading, speed } = position.coords;
+            console.log(position.coords);
+            // Show a map centered at latitude / longitude.
+            map.innerHTML = '<iframe width="100%" height="300" src="https://maps.google.com/maps?q='+latitude+','+longitude+'&amp;z=15&amp;output=embed"></iframe>';
+            // Show the parameters measured in real time 
+            reqcount++;
+            details.innerHTML = "Accuracy: "+accuracy+"<br>";
+            details.innerHTML += "Latitude: "+latitude+" | Longitude: "+longitude+"<br>";
+            details.innerHTML += "Altitude: "+altitude+"<br>";
+            details.innerHTML += "Heading: "+heading+"<br>";
+            details.innerHTML += "Speed: "+speed+"<br>";
+            details.innerHTML += "reqcount: "+reqcount;
+        }
+        function errorCallback(error) {
+
+        }
+        var options = {
+            enableHighAccuracy: false,
+            timeout: 5000,
+            maximumAge: 0
+        };
+        
+        // To end the tracking with a button
+        function buttonClickHandler() {
+            // Cancel the updates when the user clicks a button.
+            navigator.geolocation.clearWatch(watchId);
+        }
+    </script>
+    <button onclick="buttonClickHandler()">
+        Stop watching location
+      </button>
+</body>
+</html>

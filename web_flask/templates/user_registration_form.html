@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Registration</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='styles/user_registration_form.css')}}">
+
+</style>
+</head>
+<body>
+<div class="container mt-5">
+  <h2>User Registration</h2>
+  <h3>{{message}}</h3>
+
+  <form method="POST" action="/signup">
+    <div class="form-group">
+      <label for="firstname">First Name:</label>
+      <input type="text" id="firstname" name="firstname" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="lastname">Last Name:</label>
+    <input type="text" id="lastname" name="lastname" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" class="form-control" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+  </form>
+  Already have an account? <a href="/login"> Login </a>
+    <br/>
+    <a href="/home"> Home </a>
+</body>
+</div>
+
+</body>
+</html>

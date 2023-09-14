@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/uber.css')}}">
+    <script src="https://kit.fontawesome.com/f30fac2c61.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Catamaran:wght@200&family=Courgette&family=Edu+TAS+Beginner:wght@700&family=Lato:wght@300;900&family=Mukta:wght@700&family=Mulish:wght@300&family=Open+Sans&family=PT+Sans:ital,wght@1,700&family=Poppins:wght@300&family=Raleway:wght@100&family=Roboto+Condensed:wght@700&family=Roboto+Slab&family=Roboto:wght@300&family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="left">
+            <img src="{{ url_for('static', filename='/images/Rider-App-logo.png')}}" alt="">
+            <p>Company</p>
+            <p>Safety</p>
+            <p>Help</p>
+        </div>
+
+        <div class="right">
+            <p>EN</p>
+            <i class="fa-solid fa-grip"></i>
+            <p>Products</p>
+            <a href="/login"><p>Login</p></a>
+            <a href="/signup"><button>Sign up</button></a>
+            <a href="/driversignup"><button>Driver Sign up</button></a>
+        </div>
+    </nav>
+
+    <div class="card">
+       <div class="main">
+        <div class="icon">  
+
+            <div class="car">
+                <i class="fa-solid fa-car"></i>
+               <p>Ride</p>
+            </div>
+
+            <div class="car">
+                <i class="fa-solid fa-wifi"></i>
+               <p>Drive</p>
+            </div>
+        </div>
+        <form id="form" method="POST" action="/map">
+            <h1>Request a ride now</h1>
+            <input type="text" placeholder="Enter the pickup Location">
+            <input type="text" id="selected_destination" name="selected_destination" placeholder="Enter Destination" required>
+            <!---->
+            <div id="rideForm">
+                <select id="selected_ride" name="selected_ride">
+                <option value="Classic">Classic Ride</option>
+                <option value="Standard">Standard Ride</option>
+                <option value="Executive">Executive Ride</option>
+                </select>
+            </div>
+            <!---->
+            <div class="btn">
+                <button class="fr" type="submit">Request Now</button>
+                <button>Schedule For Later</button>
+            </div>
+        </form>
+       </div>
+    </div>
+
+    <div class="ride">
+        <div class="head">
+            <h1>Ride with Uber</h1>
+        </div>
+        <div class="uber">
+            <div class="auto">
+                <img src="{{ url_for('static', filename='/images/Auto-150X150p4x.png')}}" alt="">
+                <div>
+                    <h2>Uber Moto</h2>
+                    <p>Get affordable uber auto ride with no hangling.</p>
+                </div>
+            </div>
+            <div class="auto">
+                <img src="{{ url_for('static', filename='/images/Moto-150X150p4x.png')}}" alt="">
+                <div>
+                    <h2>Uber Moto</h2>
+                    <p>Get affordable uber auto ride with no hangling.</p>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="uber">
+            <div class="auto">
+                <img src="{{ url_for('static', filename='/images/uber-hourly.jpeg')}}" alt="">
+                <div>
+                    <h2>Uber Moto</h2>
+                    <p>Get affordable uber auto ride with no hangling.</p>
+                </div>
+            </div>
+            <div class="auto">
+                <img src="{{ url_for('static', filename='/images/Intercity-150X150p4x.png')}}" alt="">
+                <div>
+                    <h2>Uber Moto</h2>
+                    <p>Get affordable uber auto ride with no hangling.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="head">
+        <h1>Focused on safety, wherever you go</h1>
+    </div>
+
+
+    <div class="safe">
+        <div class="img">
+            <img src="{{ url_for('static', filename='/images/Safety_Home_Img2x.webp')}}" alt="">
+            <p>Our commitment is to your safety</p>
+        </div>
+    
+        <div class="img">
+            <img src="{{ url_for('static', filename='/images/Cities_Home_Img2x.jpeg')}}" alt="">
+            <p>Setting 10,000+ cities in motion</p>
+        </div>
+    </div>
+
+
+    <div class="app">
+        <h1>There's more to love in the apps</h1>
+        <div class="down">
+            <div class="imgs">
+                <img src="{{ url_for('static', filename='/images/Rider-App-logo.png')}}" alt="">
+                <p>Download the Uber App</p>
+            </div>
+
+            <div class="imgs">
+                <img src="{{ url_for('static', filename='/images/Rider-App-logo.png')}}" alt="">
+                <p>Download the Driver App </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="list">
+            <h2>Company</h2>
+            <p>About us</p>
+            <p>Our offerings</p>
+            <p>Newsroom</p>
+            <p>Investors</p>
+            <p>Blog</p>
+           
+        </div>
+
+        <div class="list">
+            <h2>Products</h2>
+            <p>Ride</p>
+            <p>Drive</p>
+            <p>Deliver</p>
+            <p>Eat</p>
+            <p>Uber for Business</p>
+          
+            
+        </div>
+
+
+        <div class="list">
+            <h2>Global Citizenship</h2>
+            <p>Safety</p>
+            <p>Diversity and Inclusion</p>
+          
+            
+        </div>
+
+        <div class="list">
+            <h2>Travel</h2>
+            <p>Airports</p>
+            <p>Cities</p>
+           
+            
+        </div>
+    </div>
+    <script>
+        /*
+         */
+         /* */
+         const form = document.getElementById('form')
+         document.getElementById('destination').addEventListener('click', () => {
+             if (form.style.display === 'block') {
+                 form.style.display = 'none';
+             } else {
+                 form.style.display = 'block'
+             }
+         });
+         const chat = document.getElementById('chat_box');
+         document.getElementById('start_chat').addEventListener('click', () => {
+             if (chat.style.display === 'block') {
+                 chat.style.display = 'none';
+             } else {
+                 chat.style.display = 'block';
+             }
+         });
+         
+         function myfunction2() {
+             let userType = "default";
+             const socket = io({autoConnect: false});
+             socket.connect();
+             socket.on("connect", function() {
+                
+             socket.emit("update_home_page");
+             socket.on("userType", (data) => {
+                 userType = data["userTypes"]
+                 console.log("checking for userType: ", userType);
+                 if (userType === "driver") {
+                     console.log("The driver got here")
+                     document.getElementById('destination').style.display = 'none';
+                     //put an event listener tied to the receieve a ride button of the driver for this 
+                     document.getElementById('receive_ride').addEventListener('click', () => {
+                     socket.on("ride_booked", (data) => {
+                         console.log("driver can see the ride booked");
+                         destination = data["selected_destination"];
+                         console.log(data);
+                         res = confirm("Do you accept the ride to "+ destination + "?")
+                         if (res)
+                             socket.emit('ride_accepted')
+                             alert("Ride Booked")
+                     });
+                 });
+                 }
+                
+                 else if (userType === "passenger"){
+                     document.getElementById('receive_ride').style.display = 'none';
+                     console.log("We have a passenger here")
+                     socket.on("driver_response", (data) => {
+                         console.log("passenger listening to driver response")
+                         alert("I am on my way");
+ 
+                     })
+                 }
+             
+                 
+             });
+         });
+         }
+         
+         /*
+         let us deal with checking whether the usertype is a driver or passenger
+         if it is a driver, we listen to the ride_booked from socket and inform the 
+         the passenger by emitting another response. I am not sure using socket this much is effective 
+         
+         console.log("userType is now", userType);
+         if (userType == 'driver') {
+             console.log("we made it here")
+             
+         }
+           */
+         //if (userType == 'passenger')
+ 
+         function myfunction(selected_destination) {
+             let username = '{{current_user.firstname}}'
+ 
+                 if (!username) {
+                     username = 'Guest'
+                 }
+                 
+             let created_by = username
+             
+             const socket = io({autoConnect: false});
+                 
+             navigator.geolocation.getCurrentPosition(position => {
+                 const { latitude, longitude } = position.coords;
+                 //const current_location = position.coords;
+                 ///console.log("this is the current location, enjoy", latitude)
+                 //console.log('this is your destination', selected_destination);
+                 //console.log('let us begin now !!!')
+                 socket.connect();
+                 socket.on("connect", function() {
+                     userType = "passenger";
+                     socket.emit("new_ride", {"selected_destination": selected_destination, 
+                         "latitude": latitude,
+                         "longitude": longitude,
+                         "created_by": created_by});
+                 //console.log("yes we did");
+                 });
+                 //console.log("begin after this too")
+             })   
+         }
+ 
+         function submitForm(event) {
+             event.preventDefault();
+             let selected_destination=document.getElementById("selected_destination").value;
+             myfunction(selected_destination);
+             alert("Submission Succeful, you can proceed to book ride or map");
+             document.getElementById('start_map').addEventListener('click', () => {
+             window.location.href = "http://127.0.0.1:5000/map";
+         })
+             // Redirect to the desired path
+             //window.location.href = "http://127.0.0.1:5000/map";
+         }
+         /*
+         document.getElementById('book_ride').addEventListener('click', () => {
+                 myfunction2();
+             })
+         */
+         myfunction2();
+         form.addEventListener('submit', submitForm);
+         </script>
+</body>
+</html>
