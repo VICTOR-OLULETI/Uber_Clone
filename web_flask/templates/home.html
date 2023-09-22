@@ -78,13 +78,6 @@
         <input type="text" name="firstname">
         </div>
         <br>
-        <!--
-        <div>
-        <label for="">Enter Chat Room as (passenger or driver):</label>
-        <input type="text" name="room">
-        <br>
-        </div>
-        -->
         <button type="submit">Chat Now!!!</button>
     </form>
     </div>
@@ -156,6 +149,35 @@
                 "longitude": 7.723190279359194,
                 "created_by": created_by
                 });
+    
+        //This is the navigator.geolocation section 
+            /*
+                navigator.geolocation.watchPosition(
+                function (position) {
+                // Handle success and use the location data
+                const { latitude, longitude } = position.coords;
+                console.log("this is the current location, enjoy", latitude);
+                console.log('this is your destination', selected_destination);
+                console.log('let us begin now !!!');
+                socket.emit("position_location", { 
+                        "latitude": latitude,
+                        "longitude": longitude,
+                        "created_by": created_by});
+                    console.log("emitting event for position_location");
+                });
+                
+                },
+                function (error) {
+                // Handle error, including permission denied
+                if (error.code === error.PERMISSION_DENIED) {
+                    console.log("User denied the request for geolocation.");
+                    alert("You denied the request for geolocation. Please Book a ride again and click the button to grant permission.");
+                } else {
+                    console.error("Error getting geolocation:", error.message);
+                    // Handling other error cases
+                }});
+            }
+            */
     }
 
     // Connect the socket.io client
@@ -195,13 +217,46 @@
                 username = 'Guest'
             }
         let created_by = username    
-        // emit new ride event
+        // emit new ride event section
+        /* 
+            we are applying randome values for the latitude and longitude, 
+            to obtain real time location value, uncomment the navigator.geolocation section below and
+            comment out this section. Thanks 
+        */
         socket.emit("new_ride", {
         "selected_destination": selected_destination,
         "latitude": 4.436256106310639,
         "longitude": 7.723190279359194,
         "created_by": created_by
         });
+         //This is the navigator.geolocation section 
+            /*
+                navigator.geolocation.getCurrentPosition(
+                function (position) {
+                // Handle success and use the location data
+                const { latitude, longitude } = position.coords;
+                console.log("this is the current location, enjoy", latitude);
+                console.log('this is your destination', selected_destination);
+                console.log('let us begin now !!!');
+                socket.emit("new_ride", {"selected_destination": selected_destination, 
+                        "latitude": latitude,
+                        "longitude": longitude,
+                        "created_by": created_by});
+                    console.log("yes we did");
+                });
+                
+                },
+                function (error) {
+                // Handle error, including permission denied
+                if (error.code === error.PERMISSION_DENIED) {
+                    console.log("User denied the request for geolocation.");
+                    alert("You denied the request for geolocation. Please Book a ride again and click the button to grant permission.");
+                } else {
+                    console.error("Error getting geolocation:", error.message);
+                    // Handling other error cases
+                }});
+            }
+            */
     }
     // function to handle the form for destination information
     function submitForm(event) {
