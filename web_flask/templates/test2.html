@@ -1,0 +1,128 @@
+<script>
+    // Create a single Socket.IO connection
+    const socket = io({autoConnect: false});
+     
+
+    // function to handle the 'Book Ride Now' button click
+     document.getElementById('destination').addEventListener('click', () => {
+        const form = document.getElementById('form')
+         form.style.display = form.style.display === 'block' ? 'none': 'block';
+     });
+
+     // function to handle the 'start_chat' button click event
+     function handleStartChatClick() {
+        const chat = document.getElementById('chat_box');
+        chat.style.display = chat.style.display === 'block' ? 'none' : 'block';
+    }
+    // function to handle 'start_map' button click even
+    function handleStartMapClick() {
+        window.location.href = "http://127.0.0.1:5000/map";
+    }
+    function handleReceiveRide() {
+        alert("You can now receive ride requests from passengers")
+        let driveName = '{{current_user.firstname}}'
+        console.log('we are emitting ready_for_ride_requests now')
+        socket.emit("ready_for_ride_requests", {"driver_name": driveName})
+        // set up event for 'ride_booked' event
+        socket.on("ride_booked", (data) => {
+            console.log("I, the driver can see the ride booked");
+            destination = data["selected_destination"];
+            passenger_name = data["passenger_name"];
+            driver_name = data["driver_name"];
+
+            console.log(data);
+            res = confirm("Do you accept the ride from your passenger: " + passenger_name + " to "+ destination + "?")
+            if (res) {
+                socket.emit('ride_accepted', {'response': "I am on my way...", 
+                                            "driver_name": driver_name, 
+                                            "passenger_name": passenger_name})
+                alert("Ride Booked")
+            }
+            else {
+                let user1 = '{{current_user.firstname}}'
+                alert('ride canceled, checking for other drivers')
+                socket.emit('ride_rejected', {"driver_name": user1})
+            }
+        });
+    }
+    document.getElementById('start_chat').addEventListener('click', handleStartChatClick);
+    document.getElementById('start_map').addEventListener('click', handleStartMapClick);
+    document.getElementById('form').addEventListener('submit', submitForm);
+
+// function to keep track of location
+function keep_track_location() {
+    console.log("keep track is running")
+    let username = '{{current_user.firstname}}'
+    if (!username) {
+        username = 'Guest'
+    }
+    let created_by = username 
+
+    // emit the posiiton_location event 
+    socket.emit("position_location", {
+            "latitude": 4.436256106310639,
+            "longitude": 7.723190279359194,
+            "created_by": created_by
+            });
+}
+
+// Connect the socket.io client
+socket.connect();
+    //emit the event update_home_page when connected 
+socket.on("connect", function() {
+    socket.emit("update_home_page");
+
+    //listen to userType event
+    socket.on("userType", (data) => {
+        const userType = data["userTypes"]
+        console.log("checking for userType: ", userType);
+        if (userType === "driver") {
+            document.getElementById('destination').style.display = 'none';
+            document.getElementById('receive_ride').addEventListener('click', handleReceiveRide);
+        }
+        else if(userType === 'passenger') {
+            document.getElementById('receive_ride').style.display = 'none';
+        }
+        //document.getElementById('receive_ride').addEventListener('click', handleReceiveRide);
+            
+        // listening to event 'driver_response'
+        console.log("We have a passenger here")
+        socket.on("driver_response", (data) => {
+            console.log("passenger listening to driver response")
+            const driver_name = data['driver_name']
+            alert("Driver "+ driver_name + ": I am on my way");
+            });
+        });
+            
+    });
+   
+ // function to emit new ride event
+function emitNewRide(selected_destination) {
+    let username = '{{current_user.firstname}}'
+        if (!username) {
+            username = 'Guest'
+        }
+    let created_by = username    
+    // emit new ride event
+    socket.emit("new_ride", {
+    "selected_destination": selected_destination,
+    "latitude": 4.436256106310639,
+    "longitude": 7.723190279359194,
+    "created_by": created_by
+    });
+}
+// function to handle the form for destination information
+function submitForm(event) {
+    event.preventDefault();
+    let selected_destination=document.getElementById("selected_destination").value;
+    emitNewRide(selected_destination);
+    alert("Submission Succeful, you can proceed to book ride or map");
+    document.getElementById('start_map').addEventListener('click', () => {
+    window.location.href = "http://127.0.0.1:5000/map";
+    });
+}
+
+
+keep_track_location()
+form.addEventListener('submit', submitForm);
+</script>

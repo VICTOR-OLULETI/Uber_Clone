@@ -177,129 +177,147 @@
         </div>
     </div>
     <script>
+          /* */
+          const form = document.getElementById('form')
+        document.getElementById('destination').addEventListener('click', () => {
+            if (form.style.display === 'block') {
+                form.style.display = 'none';
+            } else {
+                form.style.display = 'block'
+            }
+        });
+        const chat = document.getElementById('chat_box');
+        document.getElementById('start_chat').addEventListener('click', () => {
+            if (chat.style.display === 'block') {
+                chat.style.display = 'none';
+            } else {
+                chat.style.display = 'block';
+            }
+        });
+        
+            let userType = "default";
+            const socket = io({autoConnect: false});
+            socket.connect();
+            socket.on("connect", function() {
+                socket.emit('current_user', '{{current_user.firstname}}')
+            socket.emit("update_home_page");
+            socket.on("userType", (data) => {
+                userType = data["userTypes"]
+                console.log("checking for userType: ", userType);
+                if (userType === "driver") {
+                    document.getElementById('destination').style.display = 'none';
+                }
+                else if(userType === 'passenger') {
+                    document.getElementById('receive_ride').style.display = 'none';
+                }
+                   
+                    
+                    //put an event listener tied to the receieve a ride button of the driver for this 
+                    document.getElementById('receive_ride').addEventListener('click', () => {
+                        alert("You can now receive ride requests from passengers")
+                    socket.on("ride_booked", (data) => {
+                        console.log("driver can see the ride booked");
+                        destination = data["selected_destination"];
+                        console.log(data);
+                        res = confirm("Do you accept the ride to "+ destination + "?")
+                        if (res)
+                            socket.emit('ride_accepted', {'response': "I am on my way..."})
+                            alert("Ride Booked")
+                    });
+                });
+                
+                    console.log("We have a passenger here")
+                    socket.on("driver_response", (data) => {
+                        console.log("passenger listening to driver response")
+                        alert("I am on my way");
+
+                    })
+                })
+            
+                
+            });
+      
+    
+        function myfunction(selected_destination) {
+            let username = '{{current_user.firstname}}'
+
+                if (!username) {
+                    username = 'Guest'
+                }
+                
+            let created_by = username
+            
+            const socket = io({autoConnect: false});
+            /*
+            navigator.geolocation.getCurrentPosition(position => {
+                const { latitude, longitude } = position.coords;
+                //const current_location = position.coords;
+                console.log("this is the current location, enjoy", latitude)
+                console.log('this is your destination', selected_destination);
+                console.log('let us begin now !!!')
+                socket.connect();
+                socket.on("connect", function() {
+                    socket.emit("new_ride", {"selected_destination": selected_destination, 
+                        "latitude": latitude,
+                        "longitude": longitude,
+                        "created_by": created_by});
+                console.log("yes we did");
+                });
+                console.log("begin after this too")
+            })   
+        }
+        */
+        socket.connect();
+            socket.on("connect", function() {
+                userType = 'passenger'
+                socket.emit("new_ride", {
+                "selected_destination": selected_destination,
+                "latitude": 4.436256106310639,
+                "longitude": 7.723190279359194,
+                "created_by": created_by
+                });
+            });
+            /*
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+            // Handle success and use the location data
+            const { latitude, longitude } = position.coords;
+            console.log("this is the current location, enjoy", latitude);
+            console.log('this is your destination', selected_destination);
+            console.log('let us begin now !!!');
+            
+            },
+            function (error) {
+            // Handle error, including permission denied
+            if (error.code === error.PERMISSION_DENIED) {
+                console.log("User denied the request for geolocation.");
+                alert("You denied the request for geolocation. Please Book a ride again and click the button to grant permission.");
+                // You can display a user-friendly message here or take appropriate action
+            } else {
+                console.error("Error getting geolocation:", error.message);
+                // Handle other error cases
+            }});
+        }
+    */   }
+        function submitForm(event) {
+            event.preventDefault();
+            let selected_destination=document.getElementById("selected_destination").value;
+            myfunction(selected_destination);
+            alert("Submission Succeful, you can proceed to book ride or map");
+
+            document.getElementById('start_map').addEventListener('click', () => {
+            window.location.href = "http://127.0.0.1:5000/map";
+        })
+            // Redirect to the desired path
+            //window.location.href = "http://127.0.0.1:5000/map";
+        }
         /*
-         */
-         /* */
-         const form = document.getElementById('form')
-         document.getElementById('destination').addEventListener('click', () => {
-             if (form.style.display === 'block') {
-                 form.style.display = 'none';
-             } else {
-                 form.style.display = 'block'
-             }
-         });
-         const chat = document.getElementById('chat_box');
-         document.getElementById('start_chat').addEventListener('click', () => {
-             if (chat.style.display === 'block') {
-                 chat.style.display = 'none';
-             } else {
-                 chat.style.display = 'block';
-             }
-         });
-         
-         function myfunction2() {
-             let userType = "default";
-             const socket = io({autoConnect: false});
-             socket.connect();
-             socket.on("connect", function() {
-                
-             socket.emit("update_home_page");
-             socket.on("userType", (data) => {
-                 userType = data["userTypes"]
-                 console.log("checking for userType: ", userType);
-                 if (userType === "driver") {
-                     console.log("The driver got here")
-                     document.getElementById('destination').style.display = 'none';
-                     //put an event listener tied to the receieve a ride button of the driver for this 
-                     document.getElementById('receive_ride').addEventListener('click', () => {
-                     socket.on("ride_booked", (data) => {
-                         console.log("driver can see the ride booked");
-                         destination = data["selected_destination"];
-                         console.log(data);
-                         res = confirm("Do you accept the ride to "+ destination + "?")
-                         if (res)
-                             socket.emit('ride_accepted')
-                             alert("Ride Booked")
-                     });
-                 });
-                 }
-                
-                 else if (userType === "passenger"){
-                     document.getElementById('receive_ride').style.display = 'none';
-                     console.log("We have a passenger here")
-                     socket.on("driver_response", (data) => {
-                         console.log("passenger listening to driver response")
-                         alert("I am on my way");
- 
-                     })
-                 }
-             
-                 
-             });
-         });
-         }
-         
-         /*
-         let us deal with checking whether the usertype is a driver or passenger
-         if it is a driver, we listen to the ride_booked from socket and inform the 
-         the passenger by emitting another response. I am not sure using socket this much is effective 
-         
-         console.log("userType is now", userType);
-         if (userType == 'driver') {
-             console.log("we made it here")
-             
-         }
-           */
-         //if (userType == 'passenger')
- 
-         function myfunction(selected_destination) {
-             let username = '{{current_user.firstname}}'
- 
-                 if (!username) {
-                     username = 'Guest'
-                 }
-                 
-             let created_by = username
-             
-             const socket = io({autoConnect: false});
-                 
-             navigator.geolocation.getCurrentPosition(position => {
-                 const { latitude, longitude } = position.coords;
-                 //const current_location = position.coords;
-                 ///console.log("this is the current location, enjoy", latitude)
-                 //console.log('this is your destination', selected_destination);
-                 //console.log('let us begin now !!!')
-                 socket.connect();
-                 socket.on("connect", function() {
-                     userType = "passenger";
-                     socket.emit("new_ride", {"selected_destination": selected_destination, 
-                         "latitude": latitude,
-                         "longitude": longitude,
-                         "created_by": created_by});
-                 //console.log("yes we did");
-                 });
-                 //console.log("begin after this too")
-             })   
-         }
- 
-         function submitForm(event) {
-             event.preventDefault();
-             let selected_destination=document.getElementById("selected_destination").value;
-             myfunction(selected_destination);
-             alert("Submission Succeful, you can proceed to book ride or map");
-             document.getElementById('start_map').addEventListener('click', () => {
-             window.location.href = "http://127.0.0.1:5000/map";
-         })
-             // Redirect to the desired path
-             //window.location.href = "http://127.0.0.1:5000/map";
-         }
-         /*
-         document.getElementById('book_ride').addEventListener('click', () => {
-                 myfunction2();
-             })
-         */
-         myfunction2();
-         form.addEventListener('submit', submitForm);
+        document.getElementById('book_ride').addEventListener('click', () => {
+                myfunction2();
+            })
+        */
+       
+        form.addEventListener('submit', submitForm);
          </script>
 </body>
 </html>

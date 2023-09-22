@@ -3,85 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask-SocketIO Example</title>
+    <title>CHAT WITH PASSENGER/DRIVER</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/chatbox.css')}}">
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #e5e5e5;
-        }
-        #chat {
-            width: 200%
-        }
-
-        ul {
-            height: 500px;
-            background-color: white;
-            overflow-y: scroll;
-        }
-
-        li {
-            list-style:none;
-        }
-
-        #flex-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
        
-        input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #007bff;
-        border-radius: 3px;
-        }
-        
-        button {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        margin-bottom: 10px;
-        border-radius: 7px;
-        cursor: pointer;
-        }
-
-        button:hover{
-        background-color: transparent;
-        color: black;
-        border: 2px solid white;
-        }
     </style>
 </head>
 <body>
-    <div id="flex-container">
+<div id="flex-container">
+    <header>
+       
         <div id="landing">
             <h3>Hey {{firstname}} !!!</h3>
-            <button id="join-btn">START CHATTING?</button>
+                <button id="join-btn">START CHATTING?</button>
         </div>
+
+    </header>
+    <div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flash_messages">
+            <li class="alert">{{ messages[0] }}</li>
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
         <div id="home">
-            <a href="/home"><button id="home-btn">LEAVE TO HOME PAGE</button></a> 
+            <a href="/dashboard"><button id="home-btn">LEAVE TO HOME PAGE</button></a> 
         </div>
-    <div id="chat" style="display:none;">
-        <ul id="chat-messages">
+     
+        <div id="chat" style="display:none;">
+            <ul id="chat-messages">
             {% for message in messages %}
-            <li><b>{{message.sender}}:&nbsp;</b>{{message.text}}</li>
+            <li><b>{{message.created_at}}:&nbsp;{{message.sender}}:&nbsp;</b>{{message.text}}</li>
             {% endfor %}
         </ul>
         <input type="text" id="message" placeholder="Enter a Message">
-        <h3>CHAT ROOM: {{room}}</h3>
+        <h3>CHAT ROOM(combined name of driver and passenger): {{room}}</h3>
     </div>
-    </div>
+  
+</div>
 
 <script>
     const socket = io({autoConnect: false});
-    let userType = '{{room}}';//document.getElementById("roomie").textContent;
-    let username = '{{firstname}}';//document.getElementById("first").textContent;
+    let userType = '{{room}}';
+    let username = '{{firstname}}';
     document.getElementById('join-btn').addEventListener("click", function() {
         
         socket.connect();
@@ -96,16 +63,20 @@
             if (event.key == "Enter") {
                 let message = document.getElementById("message").value;
                 socket.emit("new_message", {"message": message, "username": username, "usertype":userType });
+                /*if i as a passenger or driver emit a message i expect that only my driver or 
+                passenger should listen*/
                 document.getElementById("message").value = "";
             }
         })
 
         socket.on("chat", function(data) {
+            console.log("I can listen to chats now")
             let ul = document.getElementById("chat-messages");
             let li = document.createElement("li");
-            li.appendChild(document.createTextNode(data["usertype"] + " " + data["username"] + ": " + data["message"]));
+            li.appendChild(document.createTextNode(data["timestamp"] + ":" + data["username"] + ": " + data["message"]));
             ul.appendChild(li);
-            ul.scrolltop = ul.scrollHeight;
+            ul.scrollTop = ul.scrollHeight;
+            console.log('this is the message', data["message"]);
         })
 </script>
 </body>

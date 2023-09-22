@@ -1,0 +1,68 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e5e5e5;
+}
+
+#chat {
+    width: 200%
+}
+
+ul {
+    height: 500px;
+    background-color: white;
+    overflow-y: scroll;
+    background-color: #f0f0f0; /* Background color for the <ul> */
+    border: 1px solid #ddd; /* Just for visualization */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Add a shadow for visual separation */
+}
+
+/* Add a shadow for visual separation 
+.flash_message ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute; 
+    top: 0;
+    left: 0; 
+    background-color: #f0f0f0; 
+    border: 1px solid #ddd; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+  }
+*/
+  
+li {
+    list-style:none;
+}
+
+#flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+input {
+width: 100%;
+padding: 10px;
+border: 1px solid #007bff;
+border-radius: 3px;
+}
+
+button {
+background-color: #007bff;
+color: #fff;
+border: none;
+padding: 10px 20px;
+margin-bottom: 10px;
+border-radius: 7px;
+cursor: pointer;
+}
+
+button:hover{
+background-color: transparent;
+color: black;
+border: 2px solid white;
+}

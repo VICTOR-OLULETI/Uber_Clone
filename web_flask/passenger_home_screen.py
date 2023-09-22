@@ -6,6 +6,13 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Change this to a secure secret key
 
 # Database setup
+# Database setup for mysql even though it wasn't used
+DATABASE = {
+    "user": "username",
+    "password": "your password",
+    "host": "localhost",
+    "database": "Uber"
+}
 
 def get_db():
     db = mysql.connector.connect(**DATABASE)
