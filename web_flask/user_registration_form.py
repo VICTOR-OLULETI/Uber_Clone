@@ -6,9 +6,15 @@ from db import *
 from user import * 
 from pymongo.errors import DuplicateKeyError
 from geopy.geocoders import Nominatim
+import os
 
 app = Flask(__name__, static_url_path='/static', static_folder='static' )
-app.secret_key = "your_secret_key"  # Change this to a secure secret key
+#SECRET_KEY = os.environ.get('SECRET_KEY')
+
+app.secret_key = "secret_key"  
+# Change this to the production variable SECRET_KEY
+#app.secret_key = SECRET_KEY
+
 socketio = SocketIO(app)
 # setting up the login manager, a function in flask
 login_manager = LoginManager()
@@ -392,7 +398,7 @@ def chat():
             messages = get_messages(chat_room)
             """thought: can the messages be identified based on destination"""
             #join_room(chat_room)
-            print(f'This is name: {firstname}')
+            print(f'This is name: {username}')
             if username:
                 return render_template('chatbox.html', firstname=username, room=chat_room, messages=messages)
         except:

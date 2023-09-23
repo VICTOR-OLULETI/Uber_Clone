@@ -127,6 +127,7 @@
                 //let user1 = '{{current_user.firstname}}'
                 alert('ride canceled, checking for other drivers')
                 socket.emit('ride_rejected', {"driver_name": driveName})
+                console.log("I am listening to ride_rejected socket event")
             }
         });
     }

@@ -4,7 +4,13 @@ from user import *
 import datetime
 import math
 
-client = MongoClient("mongodb+srv://test:test@chatapp.sqimylr.mongodb.net/")
+
+
+#MONGODB_URI = os.environ.get('MONGODB_URI')
+
+client = MongoClient("mongodb+srv://test:test@chatapp.sqimylr.mongodb.net/") 
+# changing this to the production variable MONGODB_URI will now be
+#client = MongoClient(MONGODB_URI)
 
 chat_db = client.get_database("ChatDB")
 users_collection = chat_db.get_collection("users")
